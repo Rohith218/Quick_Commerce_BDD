@@ -36,7 +36,6 @@ public class OfferPageStepDefinitions {
 		op.switchtoOffersPage();
 		op.searchOffersPage(string);
 		offersProduct = op.getOffersProduct();
-		System.out.println("***************************************"+offersProduct+"**********************************");
 		ts.offersProduct = offersProduct;
 		driver.quit();
 	}

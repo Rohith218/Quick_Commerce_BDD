@@ -1,8 +1,10 @@
 package EcommerceStepDefinitions;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.util.Arrays;
 
+import org.assertj.core.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -29,7 +31,7 @@ public class LandingPageStepDefinitions {
 	public String offersProduct = "";
 	DriverInitialize d = new DriverInitialize();
 	PageObjectManager pom;
-	public LandingPageStepDefinitions(TestContextSetup ts) {
+	public LandingPageStepDefinitions(TestContextSetup ts) throws IOException {
 		this.ts = ts;
 		if(ts.driver == null) {
 			ts.driver = d.initialize();
@@ -42,9 +44,11 @@ public class LandingPageStepDefinitions {
 	String[] text;
 	Assertion a = new Assertion();
 	WebDriverWait wait;
-	@Given("Verify User is on GreenKart page {string}")
-	public void verify_user_is_on_green_kart_page(String string) {
-		d.openPage(string, driver);
+	@Given("Verify User is on GreenKart page")
+	public void verify_user_is_on_green_kart_page() throws IOException {
+		d.openPage();
+		String s = driver.getCurrentUrl();
+		a.assertEquals(d.getUrl(), s);
 	}
 	@When("search for shortname {string} on homepage and extract actualname")
 	public void search_for_shortname_on_homepage_and_extract_actualname(String string) throws InterruptedException {		
@@ -52,7 +56,6 @@ public class LandingPageStepDefinitions {
 		lp.searchItem(string);
 		text = lp.getProductName().split("-");
 		product = text[0].trim();
-		System.out.println("***************************************"+product+"**********************************");
 		ts.product = product;
 	}
 
